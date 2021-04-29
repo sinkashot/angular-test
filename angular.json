@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "secondStudy": {
+    "angular-test": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "sass"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/secondStudy",
+            "outputPath": "dist/angular-test",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -65,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "secondStudy:build"
+            "browserTarget": "angular-test:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "secondStudy:build:production"
+              "browserTarget": "angular-test:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "secondStudy:build"
+            "browserTarget": "angular-test:build"
           }
         },
         "test": {
@@ -91,7 +87,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.css"
             ],
             "scripts": []
           }
@@ -113,16 +109,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "secondStudy:serve"
+            "devServerTarget": "angular-test:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "secondStudy:serve:production"
+              "devServerTarget": "angular-test:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "secondStudy"
+  "defaultProject": "angular-test"
 }

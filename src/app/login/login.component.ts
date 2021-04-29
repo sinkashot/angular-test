@@ -1,30 +1,69 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, Inject } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { INFORMATION } from '../MyType';
+
+declare type MyCustomType = {
+  text : any;
+  number : any;
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
   @Input() visible1 : boolean;
-  @Output() sendMYEvent : EventEmitter<any> = new EventEmitter();
-  id : string;
-  pwd : string;
+  @Output() sendMyEvent : EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  id = new FormControl('');
+  pwd = new FormControl('', [Validators.required, Validators.minLength(4)]);
+
+  private message;
+
+  styleArray = {'wrong_id':false, 'wrong_pwd':false};
+
+  private test : MyCustomType = {
+    text : '',
+    number : 1234
+  }
+
+  constructor(@Inject("sending_name") my_type : INFORMATION) {
+    console.log(my_type);
+  }
 
   ngOnInit(): void {
   }
 
   tryToLogin() : void {
-    if (this.id == 'admin' && this.pwd == '1234') {
-      this.visible1 = true;
-    } else {
-      this.visible1 = false;
-    }
     console.log(this.id, this.pwd);
-    this.sendMYEvent.emit(this.visible1);
+
+    if (this.id.value == 'admin' && this.pwd.value == '1234') {
+      alert('log-in');
+      this.visible1 = true;
+      this.sendMyEvent.emit(this.visible1);
+
+    } else if (this.id.value != 'admin') {
+      this.setMessage = "wrong id";
+
+      this.styleArray.wrong_id = true;
+      this.styleArray.wrong_pwd = false;
+
+    } else if (this.pwd.value != '1234') {
+      this.setMessage = "wrong pwd";
+
+      this.styleArray.wrong_id = false;
+      this.styleArray.wrong_pwd = true;
+    }
+  }
+  
+  set setMessage(message) {
+    this.message = message;
+  }
+  
+  get getMessage() : any {
+    return this.message;
   }
 
 }

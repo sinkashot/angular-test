@@ -1,5 +1,13 @@
 <div>Welcome</div>
 
-<input type="text" placeholder="id" [(ngModel)]="id"/>
-<input type="text" placeholder="password" [(ngModel)]="pwd"/>
+<input type="text" placeholder="id" [formControl]="id"/>
+<input type="text" placeholder="password" [formControl]="pwd"/>
 <button (click)="tryToLogin()">Login</button>
+
+<div>
+    <span [style.color]="'blue'" *ngIf="pwd.hasError('minlength') || pwd.hasError('required')">pwd must be long 4 digits over.</span>
+</div>
+
+<div *ngIf="getMessage" [ngClass]="styleArray">
+    {{getMessage}}
+</div>

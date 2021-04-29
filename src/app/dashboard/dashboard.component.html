@@ -1,1 +1,22 @@
 <p>dashboard works!</p>
+
+<!-- <div *ngFor="let item of DataArray">
+    <input type="text" [value]="item.text" (change)="item.text = $event.target.value">
+    <input type="number" name="" id="" [value]="item.number" (change)="item.number = $event.target.value">
+    <input type="button" value="view" (click)="showData(item)">
+</div> -->
+
+<form [formGroup] = "formGrp">
+    <input type="text" name="" id="" [value]="" formControlName="single_data">
+    
+    <div formArrayName = "row_data" *ngFor="let item of rows.controls; let i = index;">
+        <div [formGroupName] = "i">
+            <span>{{i+1}}</span>
+            <input type="text" name="" id="" formControlName="text" [value]="item.value.text">
+            <input type="number" name="" id="" formControlName="number" [value]="item.value.number">
+            <input type="button" value="view" (click)="showData(item)">
+        </div>
+    </div>
+</form>
+
+<input type="button" value="all view" (click)="showData()">
