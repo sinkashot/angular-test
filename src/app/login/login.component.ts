@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { INFORMATION } from '../MyType';
+import { MyServiceService } from '../my-service.service';
+// import { INFORMATION } from '../MyType';
 
 declare type MyCustomType = {
   text : any;
@@ -14,8 +15,8 @@ declare type MyCustomType = {
 })
 export class LoginComponent implements OnInit {
 
-  @Input() visible1 : boolean;
-  @Output() sendMyEvent : EventEmitter<any> = new EventEmitter();
+  // @Input() visible1 : boolean;
+  // @Output() sendMyEvent : EventEmitter<any> = new EventEmitter();
 
   id = new FormControl('');
   pwd = new FormControl('', [Validators.required, Validators.minLength(4)]);
@@ -29,8 +30,12 @@ export class LoginComponent implements OnInit {
     number : 1234
   }
 
-  constructor(@Inject("sending_name") my_type : INFORMATION) {
-    console.log(my_type);
+  // constructor(@Inject("sending_name") my_type : INFORMATION) {
+  //   console.log(my_type);
+  // }
+
+  constructor(private service : MyServiceService) {
+    // console.log(service);
   }
 
   ngOnInit(): void {
@@ -41,8 +46,9 @@ export class LoginComponent implements OnInit {
 
     if (this.id.value == 'admin' && this.pwd.value == '1234') {
       alert('log-in');
-      this.visible1 = true;
-      this.sendMyEvent.emit(this.visible1);
+      // this.visible1 = true;
+      // this.sendMyEvent.emit(this.visible1);
+      this.service.addData(true, {id:'admin', name:'사용자'});
 
     } else if (this.id.value != 'admin') {
       this.setMessage = "wrong id";
