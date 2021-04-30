@@ -8,12 +8,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 // import { INFORMATION } from './MyType';
 import { MyServiceService } from './my-service.service';
+import { RouterModule, Routes } from '@angular/router';
 
 // const myData : INFORMATION = {
 //   data1 : 'data1',
 //   data2 : 1433,
 //   data3 : ['data3-1','data3-2']
 // }
+
+const router : Routes = [
+  {path : 'login', component : LoginComponent},
+  {path : 'dashboard', component : DashboardComponent},
+  {path : '', redirectTo : '/login', pathMatch : 'full'}
+]
 
 @NgModule({
   declarations: [
@@ -24,7 +31,8 @@ import { MyServiceService } from './my-service.service';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(router, {enableTracing:false, useHash:true}),
   ],
   providers: [
     // {provide:'sending_name', useValue:myData}
