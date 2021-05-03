@@ -1,5 +1,8 @@
-import { Component, Input, Output, OnInit, EventEmitter, Inject } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, Inject, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AskService } from '../ask.service';
 import { MyServiceService } from '../my-service.service';
 // import { INFORMATION } from '../MyType';
 
@@ -13,8 +16,47 @@ declare type MyCustomType = {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  id : string;
+  pwd : string;
 
+  constructor(private service : AskService, private route : Router) {
+    this.route.navigate(['/dashboard']);
+  }
+
+  ngOnInit() : void {
+
+  }
+
+  private script : Subscription;
+
+  login() {
+    console.log(this.id, this.pwd);
+
+    if (this.script) {
+      console.log(this.script);
+      this.script.unsubscribe();
+    }
+    
+    this.service.tryToLogin({id : this.id, pwd : this.pwd}).subscribe((arg:any)=>{
+      console.log(arg);
+
+      if (arg.status == true) {
+        alert('log-in');
+        this.route.navigate(['/dashboard']);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    console.log(this.script);
+    
+    if (this.script) {
+      this.script.unsubscribe();
+    }
+  }
+
+  /*
   // @Input() visible1 : boolean;
   // @Output() sendMyEvent : EventEmitter<any> = new EventEmitter();
 
@@ -71,5 +113,5 @@ export class LoginComponent implements OnInit {
   get getMessage() : any {
     return this.message;
   }
-
+  */
 }
