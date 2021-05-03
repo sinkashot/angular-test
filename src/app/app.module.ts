@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 // import { INFORMATION } from './MyType';
 import { MyServiceService } from './my-service.service';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 // const myData : INFORMATION = {
 //   data1 : 'data1',
@@ -18,7 +19,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const router : Routes = [
   {path : 'login', component : LoginComponent},
-  {path : 'dashboard', component : DashboardComponent},
+  {path : 'dashboard', component : DashboardComponent, canActivate:[AuthGuard]},
   {path : '', redirectTo : '/login', pathMatch : 'full'}
 ]
 
@@ -32,7 +33,7 @@ const router : Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(router, {enableTracing:false, useHash:true}),
+    RouterModule.forRoot(router, {enableTracing:false}),
   ],
   providers: [
     // {provide:'sending_name', useValue:myData}
