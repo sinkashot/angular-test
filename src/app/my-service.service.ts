@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { stringify } from '@angular/compiler/src/util';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { INFORMATION } from './MyType';
 
@@ -6,14 +7,38 @@ import { INFORMATION } from './MyType';
   providedIn: 'root'
 })
 export class MyServiceService {
+  private ws : WebSocket = null;
+  public openEvent: EventEmitter<Event> = new EventEmitter();
+  public messageEvent: EventEmitter<any> = new EventEmitter();
+  public errorEvent: EventEmitter<ErrorEvent> = new EventEmitter();
 
-  public readonly myData : INFORMATION = {
-    data1 : 'data1',
-    data2 : 1433,
-    data3 : ['data3-1','data3-2']
+  constructor() {
+    this.init();
   }
 
-  constructor() { }
+  public init() : void{
+    this.ws = new WebSocket("ws://localhost:8080/websocket");
+    console.log("connecting...");
+    
+    this.ws.onopen = (event : Event) => {
+      console.log("open : ", event);
+      this.openEvent.emit(event);
+      console.log("connected.");
+    }
+
+    // 메세지 이벤트
+    this.ws.onmessage = (event: MessageEvent) => {
+      let msg : string;
+      this.messageEvent.emit(msg);
+    };
+
+    // 오류 이벤트
+    this.ws.onerror = (event: ErrorEvent) => {
+      console.log("error", event);
+
+      this.errorEvent.emit(event);
+    };
+  }
 
   private FACTORY : BehaviorSubject<any> = new BehaviorSubject({});
   public readonly TV : Observable<any> = this.FACTORY.asObservable();
