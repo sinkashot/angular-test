@@ -33,17 +33,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   login() {
     console.log(this.id, this.pwd);
 
+    console.log("Subscription : ",this.script);
     if (this.script) {
-      console.log(this.script);
       this.script.unsubscribe();
     }
     
     this.service.tryToLogin({id : this.id, pwd : this.pwd}).subscribe((arg:any)=>{
-      console.log(arg);
+      console.log("arg : ", arg);
 
       if (arg.status == true) {
         alert('log-in');
         this.route.navigate(['/dashboard']);
+      } else {
+        alert('invalid ID or password.');
       }
     });
   }

@@ -6,16 +6,17 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-// import { INFORMATION } from './MyType';
+import { INFORMATION } from './MyType';
 import { MyServiceService } from './my-service.service';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { HttpClientModule } from '@angular/common/http';
 
-// const myData : INFORMATION = {
-//   data1 : 'data1',
-//   data2 : 1433,
-//   data3 : ['data3-1','data3-2']
-// }
+const myData : INFORMATION = {
+  data1 : 'data1',
+  data2 : 1433,
+  data3 : ['data3-1','data3-2']
+}
 
 const router : Routes = [
   {path : 'login', component : LoginComponent},
@@ -31,6 +32,7 @@ const router : Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(router, {enableTracing:false}),

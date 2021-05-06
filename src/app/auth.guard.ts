@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AskService } from './ask.service';
+import { USER } from './MyType';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { AskService } from './ask.service';
 export class AuthGuard implements CanActivate {
 
   private status : boolean = false;
+
+  user : USER;
 
   constructor(private service : AskService) {
     service.isLogged.subscribe(result=>{

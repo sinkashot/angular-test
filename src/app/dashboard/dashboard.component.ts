@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MyServiceService } from '../my-service.service';
 
 declare type MyType = {
   text : any;
@@ -20,11 +22,15 @@ export class DashboardComponent implements OnInit {
 
   DataArray : Array<MyType> = [];
 
-  constructor(fb : FormBuilder) {
+  constructor(fb : FormBuilder, private route : Router, private service : MyServiceService) {
     this.builder = fb;
     this.rows = this.builder.array([]);
     this.single = new FormControl('Title', Validators.required);
     this.formGrp = this.builder.group({'row_data':this.rows, 'single_data':this.single});
+  }
+
+  get userName() : string {
+    return this.service.user.name;
   }
 
   ngOnInit(): void {
@@ -45,6 +51,12 @@ export class DashboardComponent implements OnInit {
     } else {
       console.log(this.DataArray);
     }
+  }
+
+  logout() {
+    localStorage.clear();
+    alert("log-out");
+    this.route.navigate(['/login']);
   }
 
 }

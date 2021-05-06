@@ -1,7 +1,7 @@
 import { stringify } from '@angular/compiler/src/util';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { INFORMATION } from './MyType';
+import { USER } from './MyType';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,13 @@ export class MyServiceService {
   public messageEvent: EventEmitter<any> = new EventEmitter();
   public errorEvent: EventEmitter<ErrorEvent> = new EventEmitter();
 
+  user : USER = {
+    id : '',
+    name : ''
+  };
+
   constructor() {
-    this.init();
+    // this.init();
   }
 
   public init() : void{

@@ -3,3 +3,8 @@ export declare type INFORMATION = {
     data2 : number,
     data3 : any,
   };
+
+export declare type USER = {
+  id : string,
+  name : string,
+};
