@@ -11,6 +11,8 @@ import { MyServiceService } from './my-service.service';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
 
 const myData : INFORMATION = {
   data1 : 'data1',
@@ -36,6 +38,9 @@ const router : Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(router, {enableTracing:false}),
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, {dataEncapsulation: false}
+    )
   ],
   providers: [
     // {provide:'sending_name', useValue:myData}

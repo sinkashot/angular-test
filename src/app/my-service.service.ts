@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -17,7 +18,13 @@ export class MyServiceService {
     name : ''
   };
 
-  constructor() {
+  private userUrl = 'api/users';
+
+  httpOptions = {
+    headers: new HttpHeaders({'content-type':'application/json'})
+  };
+
+  constructor(private http:HttpClient) {
     // this.init();
   }
 
@@ -52,5 +59,9 @@ export class MyServiceService {
     if (arg) {
       this.FACTORY.next(loginInformation);
     }
+  }
+
+  getUsers(): Observable<USER[]> {
+    return this.http.get<USER[]>(this.userUrl);
   }
 }

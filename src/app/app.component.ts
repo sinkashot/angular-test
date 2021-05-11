@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MyServiceService } from './my-service.service';
+import { USER } from './MyType';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,13 @@ export class AppComponent {
         console.log('login success : ', arg);
         this.loginBool = false;
         this.boardBool = true;
+      }
+    });
+
+    service.getUsers().subscribe((users) => {
+      for (let user of users) {
+        console.log(`user_id : ${user.id}`);
+        console.log(`user_id : ${user.name}`);
       }
     });
   }
